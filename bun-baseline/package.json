@@ -1,0 +1,16 @@
+{
+  "name": "bun-baseline-order-processor",
+  "version": "1.0.0",
+  "description": "Baseline order processing system using Bun runtime",
+  "type": "module",
+  "scripts": {
+    "start": "bun run server.ts",
+    "dev": "bun --watch server.ts"
+  },
+  "dependencies": {
+    "fastify": "^4.26.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
