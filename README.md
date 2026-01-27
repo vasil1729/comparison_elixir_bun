@@ -94,6 +94,41 @@ Load tests will demonstrate observable differences:
 2. **Stress Load** - 10,000-50,000 concurrent requests
 3. **Chaos + Load** - Combined stress testing
 
+### Quick Test
+
+```bash
+cd load-tests
+./run-tests.sh chaos
+```
+
+### Full Automated Benchmark
+
+```bash
+# Start both servers first, then:
+cd scripts
+./run-full-benchmark.sh
+
+# Results saved to: ./results/run_<timestamp>/
+# Open: ./results/run_<timestamp>/comparison_report.html
+```
+
+## 🛠️ Automation Scripts
+
+### Resource Monitoring
+
+```bash
+cd scripts
+./monitor-resources.sh chaos  # Monitor during chaos test
+```
+
+### Comparison Report
+
+```bash
+node generate-report.js ../results/run_<timestamp>
+```
+
+See [scripts/README.md](./scripts/README.md) for details.
+
 ## 📈 Expected Results
 
 | Metric            | Bun Baseline | Elixir Candidate |
@@ -112,10 +147,13 @@ Load tests will demonstrate observable differences:
 ## 📝 Status
 
 - [x] Bun baseline implementation
-- [ ] Elixir candidate implementation
-- [ ] Load testing infrastructure
-- [ ] Comparative benchmarks
-- [ ] Results documentation
+- [x] Elixir candidate implementation
+- [x] Load testing infrastructure
+- [x] Resource monitoring & metrics
+- [x] Automated benchmark runner
+- [x] Comparison report generator
+- [x] Unit tests
+- [ ] Run actual benchmarks (requires both servers running)
 
 ## 🔗 Learn More
 
