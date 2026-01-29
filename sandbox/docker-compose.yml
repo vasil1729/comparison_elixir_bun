@@ -1,0 +1,58 @@
+services:
+  # Bun baseline - constrained to 1 CPU core, 512MB RAM
+  bun-baseline:
+    build:
+      context: ../bun-baseline
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    cpus: 1.0 # Limit to 1 CPU core
+    mem_limit: 512m # Limit to 512MB RAM
+    mem_reservation: 256m
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    networks:
+      - sandbox
+
+  # Elixir candidate - same constraints for fair comparison
+  elixir-candidate:
+    build:
+      context: ../elixir-candidate
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    cpus: 1.0 # Limit to 1 CPU core
+    mem_limit: 512m # Limit to 512MB RAM
+    mem_reservation: 256m
+    environment:
+      - MIX_ENV=prod
+      - PORT=4000
+    networks:
+      - sandbox
+
+  # Redis for queue experiments (optional)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    cpus: 0.5
+    mem_limit: 256m
+    networks:
+      - sandbox
+
+  # Monitoring container
+  monitor:
+    image: nicolaka/netshoot
+    command: sleep infinity
+    cpus: 0.5
+    mem_limit: 256m
+    networks:
+      - sandbox
+    depends_on:
+      - bun-baseline
+      - elixir-candidate
+
+networks:
+  sandbox:
+    driver: bridge
